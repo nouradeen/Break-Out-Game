@@ -6,7 +6,7 @@ import java.util.*;
 public class Game {
 	private static final int WIDTH_X = 800;
 	private static final int HEIGHT_Y = 600;
-	private static final int BRICK_NUM = 10;
+	//private static final int BRICK_NUM = 10;
 
 	Ball ball;
 	Bat bat;
@@ -17,17 +17,15 @@ public class Game {
 	Random random = new Random();
 
 	public Game(GameBoard board) {
-		ball = new Ball(WIDTH_X/2, HEIGHT_Y/2, 30, 30, Color.red);
+		ball = new Ball(WIDTH_X/2, HEIGHT_Y/2, 30, 30, Color.WHITE);
 		bat = new Bat(WIDTH_X/2 - 150/2, HEIGHT_Y - 10, 150, 10, Color.gray);
-		brick = new Bricks(WIDTH_X/2 - 100, HEIGHT_Y - 450, 30, 30, Color.white);
 		bricks = new ArrayList<Bricks>();
-		// for(int i = 1; i <= BRICK_NUM; i++){
-		// 	int X = random.nextInt(78);
-		// 	int Y = random.nextInt(30);
-		//    bricks.add(new Bricks(10 * X, 10 *Y, 30, 30));
-	    // }
+		for(int i = 20; i <= 200; i+=50){
+			for(int j = 10; j <= 800; j+=80){
+				bricks.add(new Bricks(j, i, 60, 30, Color.red));
+			}
+		}
 		
-		//bricks.add(new Bricks(WIDTH_X/2 - 15, 200, 30, 30, Color.gray));
 	}
 
 	public void update(Keyboard keyboard) {
@@ -37,6 +35,17 @@ public class Game {
 
 		if(ball.BatCollision(bat)){
 			ball.ySpeed = -ball.ySpeed;
+		}
+
+		for(int i = 0; i < bricks.size(); i++){
+			if((ball.getY() > bricks.get(i).getY() - 30 && ball.getY() < bricks.get(i).getY() + 30) && (ball.getX() == bricks.get(i).getX() + 60 || ball.getX() + 60 == bricks.get(i).getX())){
+				ball.xSpeed = -ball.xSpeed;
+				bricks.remove(i);
+			} 
+			else if(ball.BrickCollesion(bricks.get(i))){
+				ball.ySpeed = -ball.ySpeed;
+				bricks.remove(i);
+			}
 		}
 
 
@@ -50,10 +59,10 @@ public class Game {
 	public void draw(Graphics2D graphics) {
 		ball.draw(graphics);
 		bat.draw(graphics);
-		brick.draw(graphics);
-		// for(Bricks e: bricks){
-		// 	e.draw(graphics);
-		// }
+		//brick.draw(graphics);
+		for(Bricks e: bricks){
+			e.draw(graphics);
+		}
 		
 	}
 }

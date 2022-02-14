@@ -20,8 +20,8 @@ public class Ball extends Sprite {
     public Ball(int x, int y, int width, int height, Color color){
         super(x, y, width, height);
         this.color = color;
-        xSpeed = 3;
-        ySpeed = -3;
+        xSpeed = 2;
+        ySpeed = -2;
     }
     @Override
     public void update(Keyboard keyboard) {
@@ -48,6 +48,12 @@ public class Ball extends Sprite {
         if(getY() <= 0 || getY() >= 600){
             ySpeed = -ySpeed;
         }
+    }
+
+    public boolean BrickCollesion(Bricks brick){
+        Rectangle ballRec = new Rectangle(getX(), getY(), getWidth(), getHeight());
+        Rectangle brickRec = new Rectangle(brick.getX(), brick.getY(), brick.getWidth(), getHeight());
+        return ballRec.intersects(brickRec);
     }
     public boolean BatCollision(Bat bat){
         Rectangle ballRec = new Rectangle(getX(), getY(), getWidth(), getHeight());

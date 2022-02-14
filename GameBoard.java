@@ -4,7 +4,7 @@ import java.util.*;
 import javax.swing.JComponent;
 
 public class GameBoard extends JComponent {
-	private final int FPS = 90; 
+	private final int FPS = 140; 
 	private Game game;
 	private Keyboard keyboard;
 	public GameBoard() {
