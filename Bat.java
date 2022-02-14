@@ -5,12 +5,11 @@ public class Bat extends Sprite {
     private Color color;
     private BatState state;
     public Bat(int x, int y, int width, int height, Color color) {
-        super(x, y, width, height);
-        this.color = color;
+        super(x, y, width, height, color);
         state = BatState.Idle;
     }
     public Bat(int x, int y, int width, int height) {
-        super(x, y, width, height);
+        super(x, y, width, height, Color.white);
         state = BatState.Idle;
     }
 
@@ -35,7 +34,7 @@ public class Bat extends Sprite {
 
     @Override
     public void draw(Graphics2D graphics) {
-        graphics.setColor(color);
+        graphics.setColor(getColor());
         graphics.fillRect(getX(), getY(), getWidth(), getHeight());
     }
     

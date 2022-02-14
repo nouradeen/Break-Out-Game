@@ -39,15 +39,27 @@ public class Game {
 
 		for(int i = 0; i < bricks.size(); i++){
 			if((ball.getY() > bricks.get(i).getY() - 30 && ball.getY() < bricks.get(i).getY() + 30) && (ball.getX() == bricks.get(i).getX() + 60 || ball.getX() + 60 == bricks.get(i).getX())){
-				ball.xSpeed = -ball.xSpeed;
-				bricks.remove(i);
+				if(bricks.get(i).getColor() == Color.red){
+					bricks.set(i, new Bricks(bricks.get(i).getX(), bricks.get(i).getY(), bricks.get(i).getWidth(), bricks.get(i).getHeight(), Color.green));
+					ball.xSpeed = -ball.xSpeed;
+				}else if(bricks.get(i).getColor() == Color.green){
+					ball.xSpeed = -ball.xSpeed;
+					bricks.remove(i);
+				}
+				
 			} 
 			else if(ball.BrickCollesion(bricks.get(i))){
-				ball.ySpeed = -ball.ySpeed;
-				bricks.remove(i);
+				if(bricks.get(i).getColor() == Color.red){
+					bricks.set(i, new Bricks(bricks.get(i).getX(), bricks.get(i).getY(), bricks.get(i).getWidth(), bricks.get(i).getHeight(), Color.green));
+					ball.ySpeed = -ball.ySpeed;
+				}else if(bricks.get(i).getColor() == Color.green){
+					ball.ySpeed = -ball.ySpeed;
+					bricks.remove(i);
+				}
 			}
 		}
 
+		
 
 		
 		// if(ball.getY() > HEIGHT_Y - 10){

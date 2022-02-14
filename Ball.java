@@ -18,8 +18,7 @@ public class Ball extends Sprite {
     //private Random random;
     //private List<BallState> states = Arrays.asList(BallState.TurningLeft, BallState.TurningRight, BallState.Falling, BallState.Jumping);
     public Ball(int x, int y, int width, int height, Color color){
-        super(x, y, width, height);
-        this.color = color;
+        super(x, y, width, height, color);
         xSpeed = 2;
         ySpeed = -2;
     }
@@ -37,7 +36,7 @@ public class Ball extends Sprite {
 
     @Override
     public void draw(Graphics2D graphics) {
-        graphics.setColor(color);
+        graphics.setColor(getColor());
         graphics.fillOval(getX(), getY(), getWidth(), getHeight());
     }
 
