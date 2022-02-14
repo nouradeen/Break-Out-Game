@@ -6,6 +6,7 @@ import javax.swing.JComponent;
 public class GameBoard extends JComponent {
 	private final int FPS = 140; 
 	private Game game;
+	private GameState gamestate;
 	private Keyboard keyboard;
 	public GameBoard() {
 		keyboard = new Keyboard();
@@ -14,7 +15,7 @@ public class GameBoard extends JComponent {
 	
 	@Override
 	public Dimension getPreferredSize() {
-		return new Dimension(800, 600);
+		return new Dimension(1100, 600);
 	}
 
 	@Override
@@ -23,8 +24,12 @@ public class GameBoard extends JComponent {
 		Graphics2D graphics = (Graphics2D)arg0;
 		graphics.setColor(Color.black);
 		graphics.fillRect(0, 0, getWidth(), getHeight());
-		
 		game.draw(graphics);
+		painLine(arg0);
+	}
+	private void painLine(Graphics g){
+		g.setColor(Color.white);
+		g.drawLine(810, 0, 810, 600);
 	}
 	
 	@Override
@@ -37,7 +42,7 @@ public class GameBoard extends JComponent {
 	}
 
 	public void start() {
-		while(true) {
+		while(game.state != GameState.PASUE) { // Change back? change to "true" and remove GameState.java and remove the PAUSE from Game.java
 			game.update(keyboard);
 			try {
 				Thread.sleep(1000 / FPS); //Throttle thread
@@ -46,5 +51,16 @@ public class GameBoard extends JComponent {
 			}
 			this.repaint();
 		}
+		
+		//Change back? Remove this section
+		if(game.state == GameState.PASUE){
+			try {
+				Thread.sleep(40000000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 	}
 }
