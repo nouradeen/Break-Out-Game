@@ -1,15 +1,11 @@
 import java.awt.*;
-import java.lang.reflect.WildcardType;
 import java.util.*;
-
-import javax.swing.GroupLayout;
-import javax.xml.stream.events.StartElement;
 
 public class Game {
 	private static final int WIDTH_X = 800;
 	private static final int HEIGHT_Y = 600;
 	int Score = 0;
-	int Lives = 1;
+	int Lives = 3;
 	public GameState state;
 
 	Ball ball;
@@ -43,7 +39,7 @@ public class Game {
 		}
 
 		for(int i = 0; i < bricks.size(); i++){
-			if((ball.getY() > bricks.get(i).getY() - 30 && ball.getY() < bricks.get(i).getY() + 30) && (ball.getX() == bricks.get(i).getX() + 60 || ball.getX() + 60 == bricks.get(i).getX())){
+			if((ball.getY() > bricks.get(i).getY() - 30 && ball.getY() < bricks.get(i).getY() + 30) && (ball.getX() == bricks.get(i).getX() + 60 || ball.getX() + 30 == bricks.get(i).getX())){
 				if(bricks.get(i).getColor() == Color.red){
 					bricks.set(i, new Bricks(bricks.get(i).getX(), bricks.get(i).getY(), bricks.get(i).getWidth(), bricks.get(i).getHeight(), Color.green));
 					ball.xSpeed = -ball.xSpeed;
@@ -62,6 +58,7 @@ public class Game {
 					Score += 100;
 				}else if(bricks.get(i).getColor() == Color.green){
 					ball.ySpeed = -ball.ySpeed;
+					bricks.remove(i);
 					Score += 100;
 				}
 			}
@@ -94,13 +91,16 @@ public class Game {
 		graphics.setColor(Color.red);
 		if(Lives <= 0 && !bricks.isEmpty()){
 			state = state.PASUE; //Changed the GameBoard class
-			drawString(graphics, "Ink Free", "GAME OVER!", 300, 400, 80);
+			drawString(graphics, "Ink Free", "GAME OVER!", 180, 400, 80);
+		} else if(Lives > 0 && bricks.isEmpty()){
+			state = state.PASUE;
+			drawString(graphics, "Ink Free", "You WON! Score: " + String.valueOf(Score), 200, 300, 80);
 		}
 		
 	}
 
 	private void drawString(Graphics g, String _font, String text, int x, int y, int size){
-		Font font = new Font(_font, Font.BOLD, 38);
+		Font font = new Font(_font, Font.BOLD, size);
 		g.setFont(font);
 		g.drawString(text, x, y);
 	}

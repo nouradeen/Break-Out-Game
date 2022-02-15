@@ -55,9 +55,8 @@ public class GameBoard extends JComponent {
 		//Change back? Remove this section
 		if(game.state == GameState.PASUE){
 			try {
-				Thread.sleep(40000000);
+				Thread.sleep(60000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
