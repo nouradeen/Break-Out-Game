@@ -4,18 +4,19 @@ import java.util.*;
 public class Game {
 	private static final int WIDTH_X = 800;
 	private static final int HEIGHT_Y = 600;
-	int Score = 0;
-	int Lives = 3;
-	public GameState state;
+	private int Score = 0;
+	private int Lives = 3;
+	private GameState state;
 
-	Ball ball;
-	Bat bat;
-	Bricks brick;
+	private Ball ball;
+	private Bat bat;
 
-	public ArrayList<Bricks> bricks;
+	private ArrayList<Bricks> bricks;
 
-	Random random = new Random();
+	private Random random = new Random();
 	private Color[] colors = new Color[] {Color.red, Color.green};
+
+
 	public Game(GameBoard board) {
 		
 		ball = new Ball(WIDTH_X/2, HEIGHT_Y/2, 30, 30, Color.WHITE);
@@ -29,23 +30,28 @@ public class Game {
 		}
 	}
 
+	public GameState getState(){
+		return state;
+	}
+
+
 	public void update(Keyboard keyboard) {
 		
 		ball.update(keyboard);
 		bat.update(keyboard);
 
 		if(ball.BatCollision(bat)){
-			ball.ySpeed = -ball.ySpeed;
+			ball.setYSpeed(-ball.getYSpeed());
 		}
 
 		for(int i = 0; i < bricks.size(); i++){
 			if((ball.getY() > bricks.get(i).getY() - 30 && ball.getY() < bricks.get(i).getY() + 30) && (ball.getX() == bricks.get(i).getX() + 60 || ball.getX() + 30 == bricks.get(i).getX())){
 				if(bricks.get(i).getColor() == Color.red){
 					bricks.set(i, new Bricks(bricks.get(i).getX(), bricks.get(i).getY(), bricks.get(i).getWidth(), bricks.get(i).getHeight(), Color.green));
-					ball.xSpeed = -ball.xSpeed;
+					ball.setXSpeed(-ball.getXSpeed());
 					Score += 100;
 				}else if(bricks.get(i).getColor() == Color.green){
-					ball.xSpeed = -ball.xSpeed;
+					ball.setXSpeed(-ball.getXSpeed());
 					bricks.remove(i);
 					Score += 100;
 				}
@@ -54,10 +60,10 @@ public class Game {
 			else if(ball.BrickCollesion(bricks.get(i))){
 				if(bricks.get(i).getColor() == Color.red){
 					bricks.set(i, new Bricks(bricks.get(i).getX(), bricks.get(i).getY(), bricks.get(i).getWidth(), bricks.get(i).getHeight(), Color.green));
-					ball.ySpeed = -ball.ySpeed;
+					ball.setYSpeed(-ball.getYSpeed());
 					Score += 100;
 				}else if(bricks.get(i).getColor() == Color.green){
-					ball.ySpeed = -ball.ySpeed;
+					ball.setYSpeed(-ball.getYSpeed());
 					bricks.remove(i);
 					Score += 100;
 				}

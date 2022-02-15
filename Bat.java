@@ -2,15 +2,11 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 
 public class Bat extends Sprite {
-    private Color color;
-    private BatState state;
     public Bat(int x, int y, int width, int height, Color color) {
         super(x, y, width, height, color);
-        state = BatState.Idle;
     }
     public Bat(int x, int y, int width, int height) {
         super(x, y, width, height, Color.white);
-        state = BatState.Idle;
     }
 
     @Override
