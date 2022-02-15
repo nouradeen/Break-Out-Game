@@ -67,6 +67,8 @@ public class Game {
 		}
 
 		if(ball.getY() >= HEIGHT_Y){
+			ball.setX(WIDTH_X/2 - 15);
+			ball.setY(HEIGHT_Y - 70);
 			Lives --;
 		}
 	}
