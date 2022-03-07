@@ -42,7 +42,7 @@ public class GameBoard extends JComponent {
 	}
 
 	public void start() {
-		while(game.getState() != GameState.PASUE) { // Change back? change to "true" and remove GameState.java and remove the PAUSE from Game.java
+		while(true) { // Change back? change to "true" and remove GameState.java and remove the PAUSE from Game.java //game.getState() != GameState.PASUE
 			game.update(keyboard);
 			try {
 				Thread.sleep(1000 / FPS); //Throttle thread
@@ -53,13 +53,13 @@ public class GameBoard extends JComponent {
 		}
 		
 		//Change back? Remove this section
-		if(game.getState() == GameState.PASUE){
-			try {
-				Thread.sleep(60000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+		// if(game.getState() == GameState.PASUE){
+		// 	try {
+		// 		Thread.sleep(60000);
+		// 	} catch (InterruptedException e) {
+		// 		e.printStackTrace();
+		// 	}
+		// }
 		
 	}
 }

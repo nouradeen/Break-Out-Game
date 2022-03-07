@@ -8,23 +8,26 @@ public class Game {
 	private static final int WIDTH_X = 800;
 	private static final int HEIGHT_Y = 600;
 	private int Score = 0;
-	private int Lives = 3;
+	private int Lives = 1;
 	private GameState state;
 	private int time;
+	private int counter = 0;
+
+	private boolean GameOver = false;
 
 	private Ball ball;
 	private Bat bat;
 
 	private ArrayList<Bricks> bricks;
 
-	private Random random = new Random();
-	private Color[] colors = new Color[] {Color.red, Color.green};
 
-	long startTime = System.currentTimeMillis();
+	private long startTime = System.currentTimeMillis();
 
 	private ArrayList<String> HighScoreNames;
 	private ArrayList<Integer> HighScoreNumbers;
+	private String name;
 
+	private Reset reset;
 
 	public Game(GameBoard board) {
 		
@@ -33,13 +36,9 @@ public class Game {
 		bricks = new ArrayList<Bricks>();
 		HighScoreNames = new ArrayList<String>();
 		HighScoreNumbers = new ArrayList<Integer>();
+		reset = new Reset();
 
-		for(int i = 20; i <= 200; i+=50){
-			for(int j = 10; j <= 800; j+=80){
-				Color randomColor = colors[random.nextInt(2)];
-				bricks.add(new Bricks(j, i, 60, 30, randomColor));
-			}
-		}
+		reset.CreateNewGame(bricks);
 	}
 
 	public GameState getState(){
@@ -48,45 +47,66 @@ public class Game {
 
 
 	public void update(Keyboard keyboard) {
-		
-		ball.update(keyboard);
-		bat.update(keyboard);
-
-		if(ball.BatCollision(bat)){
-			ball.setYSpeed(-ball.getYSpeed());
-		}
-
-		for(int i = 0; i < bricks.size(); i++){
-			if((ball.getY() > bricks.get(i).getY() - 30 && ball.getY() < bricks.get(i).getY() + 30) && (ball.getX() == bricks.get(i).getX() + 60 || ball.getX() + 30 == bricks.get(i).getX())){
-				if(bricks.get(i).getColor() == Color.red){
-					bricks.set(i, new Bricks(bricks.get(i).getX(), bricks.get(i).getY(), bricks.get(i).getWidth(), bricks.get(i).getHeight(), Color.green));
-					ball.setXSpeed(-ball.getXSpeed());
-					Score += 100;
-				}else if(bricks.get(i).getColor() == Color.green){
-					ball.setXSpeed(-ball.getXSpeed());
-					bricks.remove(i);
-					Score += 100;
-				}
-				
-			} 
-			else if(ball.BrickCollesion(bricks.get(i))){
-				if(bricks.get(i).getColor() == Color.red){
-					bricks.set(i, new Bricks(bricks.get(i).getX(), bricks.get(i).getY(), bricks.get(i).getWidth(), bricks.get(i).getHeight(), Color.green));
-					ball.setYSpeed(-ball.getYSpeed());
-					Score += 100;
-				}else if(bricks.get(i).getColor() == Color.green){
-					ball.setYSpeed(-ball.getYSpeed());
-					bricks.remove(i);
-					Score += 100;
+		if(GameOver == false){
+			ball.update(keyboard);
+			bat.update(keyboard);
+	
+			if(ball.BatCollision(bat)){
+				ball.setYSpeed(-ball.getYSpeed());
+			}
+	
+			for(int i = 0; i < bricks.size(); i++){
+				if((ball.getY() > bricks.get(i).getY() - 30 && ball.getY() < bricks.get(i).getY() + 30) && (ball.getX() == bricks.get(i).getX() + 60 || ball.getX() + 30 == bricks.get(i).getX())){
+					if(bricks.get(i).getColor() == Color.red){
+						bricks.set(i, new Bricks(bricks.get(i).getX(), bricks.get(i).getY(), bricks.get(i).getWidth(), bricks.get(i).getHeight(), Color.green));
+						ball.setXSpeed(-ball.getXSpeed());
+						Score += 100;
+					}else if(bricks.get(i).getColor() == Color.green){
+						ball.setXSpeed(-ball.getXSpeed());
+						bricks.remove(i);
+						Score += 100;
+					}
+					
+				} 
+				else if(ball.BrickCollesion(bricks.get(i))){
+					if(bricks.get(i).getColor() == Color.red){
+						bricks.set(i, new Bricks(bricks.get(i).getX(), bricks.get(i).getY(), bricks.get(i).getWidth(), bricks.get(i).getHeight(), Color.green));
+						ball.setYSpeed(-ball.getYSpeed());
+						Score += 100;
+					}else if(bricks.get(i).getColor() == Color.green){
+						ball.setYSpeed(-ball.getYSpeed());
+						bricks.remove(i);
+						Score += 100;
+					}
 				}
 			}
+	
+			if(ball.getY() >= HEIGHT_Y){
+				ball.setX(WIDTH_X/2 - 15);
+				ball.setY(HEIGHT_Y - 70);
+				Lives --;
+			}
 		}
+		if(GameOver == true && counter < 1){
+			counter++;
+			
+			do{
+				name = popup();
+			}while(name.length() > 3);
 
-		if(ball.getY() >= HEIGHT_Y){
-			ball.setX(WIDTH_X/2 - 15);
-			ball.setY(HEIGHT_Y - 70);
-			Lives --;
+			AddHighScore(name, HighScoreNames.size(), time);
+			System.out.println(HighScoreNames + " " + HighScoreNumbers);
 		}
+		if(keyboard.isKeyDown(Key.Space)){
+			GameOver = false;
+			counter = 0;
+			Lives = 1;
+			Score = 0;
+			reset.reset(bricks);
+			reset.CreateNewGame(bricks);
+			startTime = System.currentTimeMillis();
+		}
+		
 	}
 
 	public void AddHighScore(String text, int index, int time){
@@ -95,12 +115,12 @@ public class Game {
 	}
 
 	public String popup(){
-		String name = JOptionPane.showInputDialog("Please write your name: ");
+		String name = JOptionPane.showInputDialog("Please write your name (MAX 3 characters): ");
 		return name;
 	}
 
 	public void draw(Graphics2D graphics) {
-		if(Lives > 0 && !bricks.isEmpty()){
+		if(Lives > 0 && !bricks.isEmpty() && GameOver == false){
 			ball.draw(graphics);
 			bat.draw(graphics);
 			for(Bricks e: bricks){
@@ -116,19 +136,12 @@ public class Game {
 			time = (int)elapsedSeconds;
 		}else if(Lives <= 0 && !bricks.isEmpty()){
 			graphics.setColor(Color.red);
-			state = state.PASUE;
 			drawString(graphics, "Ink Free", "GAME OVER!", 180, 350, 80);
-
-			// Funkar inte så bra för att Draw metoden anropas flera gånger
-			//AddHighScore(popup(), HighScoreNames.size(), time);
-			//System.out.println(HighScoreNames + " " + HighScoreNumbers);
-		}else{
+			GameOver = true;
+		}else if(Lives > 0 && bricks.isEmpty()){
 			graphics.setColor(Color.red);
-			state = state.PASUE;
 			drawString(graphics, "Ink Free", "You WON! Score: " + String.valueOf(Score), 200, 300, 80);
-			// Funkar inte så bra för att Draw metoden anropas flera gånger
-			//AddHighScore(popup(), HighScoreNames.size(), time);
-			//System.out.println(HighScoreNames + " " + HighScoreNumbers);
+			GameOver = true;
 		}
 
 		Bricks brickRed_tutorial = new Bricks(820, 10, 60, 30, Color.red);
@@ -141,17 +154,7 @@ public class Game {
 		drawString(graphics, "Ink Free", "100 Points", 890, 88, 38);
 		graphics.setColor(Color.blue);
 		drawString(graphics, "Ink Free", "Score: " + String.valueOf(Score), 820, 140, 38);
-		drawString(graphics, "Ink Free", "Lives: " + String.valueOf(Lives), 820, 190, 38);
-
-		// graphics.setColor(Color.red);
-		// if(Lives <= 0 && !bricks.isEmpty()){
-		// 	state = state.PASUE; //Changed the GameBoard class
-		// 	drawString(graphics, "Ink Free", "GAME OVER!", 180, 400, 80);
-		// } else if(Lives > 0 && bricks.isEmpty()){
-		// 	state = state.PASUE;
-		// 	drawString(graphics, "Ink Free", "You WON! Score: " + String.valueOf(Score), 200, 300, 80);
-		// }
-		
+		drawString(graphics, "Ink Free", "Lives: " + String.valueOf(Lives), 820, 190, 38);		
 	}
 
 	private void drawString(Graphics g, String _font, String text, int x, int y, int size){
