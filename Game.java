@@ -97,7 +97,7 @@ public class Game {
 			AddHighScore(name, HighScoreNames.size(), time);
 			System.out.println(HighScoreNames + " " + HighScoreNumbers);
 		}
-		if(keyboard.isKeyDown(Key.Space)){
+		if(keyboard.isKeyDown(Key.Space) && GameOver == true){
 			GameOver = false;
 			counter = 0;
 			Lives = 1;
