@@ -29,7 +29,10 @@ public class Game {
 
 	private Reset reset;
 
+	private HighScore listaaaa;
+
 	public Game(GameBoard board) {
+		listaaaa = new HighScore();
 		
 		ball = new Ball(WIDTH_X/2, HEIGHT_Y/2, 30, 30, Color.WHITE);
 		bat = new Bat(WIDTH_X/2 - 150/2, HEIGHT_Y - 10, 150, 10, Color.gray);
@@ -94,8 +97,13 @@ public class Game {
 				name = popup();
 			}while(name.length() > 3);
 
-			AddHighScore(name, HighScoreNames.size(), time);
-			System.out.println(HighScoreNames + " " + HighScoreNumbers);
+			listaaaa.add(new ScoreContainer(name, Score));
+			if(listaaaa.size() > 2){
+				listaaaa.sort();
+			}
+			listaaaa.printList();
+			//AddHighScore(name, HighScoreNames.size(), time);
+			//System.out.println(HighScoreNames + " " + HighScoreNumbers);
 		}
 		if(keyboard.isKeyDown(Key.Space) && GameOver == true){
 			GameOver = false;
@@ -164,3 +172,15 @@ public class Game {
 	}
 
 }
+
+
+/*
+1- Programmera
+2- Klasser
+3- Datastrukturer
+	* Implement ADTer
+4- Analys och desgin
+5- Grafik
+	* Swing
+
+*/
