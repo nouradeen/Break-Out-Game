@@ -13,6 +13,8 @@ public class Game {
 	private int time;
 	private int counter = 0;
 
+	private Window window;
+
 	private boolean GameOver = false;
 
 	private Ball ball;
@@ -23,25 +25,22 @@ public class Game {
 
 	private long startTime = System.currentTimeMillis();
 
-	private ArrayList<String> HighScoreNames;
-	private ArrayList<Integer> HighScoreNumbers;
 	private String name;
 
 	private Reset reset;
 
-	private HighScore listaaaa;
+	private HighScore highscore;
 
 	public Game(GameBoard board) {
-		listaaaa = new HighScore();
+		highscore = new HighScore();
 		
 		ball = new Ball(WIDTH_X/2, HEIGHT_Y/2, 30, 30, Color.WHITE);
 		bat = new Bat(WIDTH_X/2 - 150/2, HEIGHT_Y - 10, 150, 10, Color.gray);
 		bricks = new ArrayList<Bricks>();
-		HighScoreNames = new ArrayList<String>();
-		HighScoreNumbers = new ArrayList<Integer>();
 		reset = new Reset();
-
 		reset.CreateNewGame(bricks);
+
+		window = new Window(highscore);
 	}
 
 	public GameState getState(){
@@ -97,13 +96,21 @@ public class Game {
 				name = popup();
 			}while(name.length() > 3);
 
-			listaaaa.add(new ScoreContainer(name, Score));
-			if(listaaaa.size() > 2){
-				listaaaa.sort();
+			
+			highscore.add(new ScoreContainer(name, Score));
+			if(highscore.size() > 2){
+				highscore.sort();
 			}
-			listaaaa.printList();
-			//AddHighScore(name, HighScoreNames.size(), time);
-			//System.out.println(HighScoreNames + " " + HighScoreNumbers);
+
+			if(highscore.size() == 11){
+				highscore.sort();
+				highscore.remove(10);
+			}
+			
+
+			
+
+			//highscore.printList();
 		}
 		if(keyboard.isKeyDown(Key.Space) && GameOver == true){
 			GameOver = false;
@@ -115,11 +122,6 @@ public class Game {
 			startTime = System.currentTimeMillis();
 		}
 		
-	}
-
-	public void AddHighScore(String text, int index, int time){
-		HighScoreNames.add(index, text);
-		HighScoreNumbers.add(index, Score - time);
 	}
 
 	public String popup(){

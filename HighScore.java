@@ -20,19 +20,28 @@ public class HighScore {
         for(int i = 0; i < dlm.size(); i++){
             list.add((ScoreContainer)dlm.get(i));
         }
-        Collections.sort(list);
+        Collections.sort(list, Collections.reverseOrder());
         dlm.removeAllElements();
         for(ScoreContainer o: list){
-            System.out.println("Adding");
             dlm.addElement(o);
             //System.out.println(o.getName() + " " + o.getScore());
         }
     }
-
     public void remove(int index){
         dlm.removeElementAt(index);
     }
+    public int size(){
+        return dlm.size();
+    }
 
+    public DefaultListModel getDlm(){
+        return dlm;
+    }
+    
+
+
+
+    //Testing method, remove when finish
     public void printList(){
         System.out.println("Begin of PrinList(): \n-----------------------------------");
         for(int i = 0; i < dlm.size(); i++){
@@ -41,9 +50,7 @@ public class HighScore {
         System.out.println("-----------------------------------");
     }
 
-    public int size(){
-        return dlm.size();
-    }
+    
 
 
 }

@@ -19,4 +19,10 @@ public class ScoreContainer implements Comparable<ScoreContainer> {
         return (this.getScore().compareTo(o.getScore()));
     }
 
+    @Override
+    public String toString() {
+        return getName() + "    " + getScore();
+    }
+
+
 }
