@@ -2,6 +2,7 @@
 import java.awt.*;
 import java.util.*;
 
+import javax.imageio.plugins.tiff.GeoTIFFTagSet;
 import javax.swing.JOptionPane;
 
 public class Game {
@@ -30,9 +31,11 @@ public class Game {
 	private Reset reset;
 
 	private HighScore highscore;
+	private LatestRun latestrun;
 
 	public Game(GameBoard board) {
 		highscore = new HighScore();
+		latestrun = new LatestRun();
 		
 		ball = new Ball(WIDTH_X/2, HEIGHT_Y/2, 30, 30, Color.WHITE);
 		bat = new Bat(WIDTH_X/2 - 150/2, HEIGHT_Y - 10, 150, 10, Color.gray);
@@ -40,7 +43,7 @@ public class Game {
 		reset = new Reset();
 		reset.CreateNewGame(bricks);
 
-		window = new Window(highscore);
+		window = new Window(highscore, latestrun);
 	}
 
 	public GameState getState(){
@@ -97,7 +100,7 @@ public class Game {
 			}while(name.length() > 3);
 
 			
-			highscore.add(new ScoreContainer(name, Score));
+			highscore.add(new ScoreContainer(name, Score - time));
 			if(highscore.size() > 2){
 				highscore.sort();
 			}
@@ -106,6 +109,28 @@ public class Game {
 				highscore.sort();
 				highscore.remove(10);
 			}
+			if(latestrun.getSize() < 3){
+				for(int i = latestrun.getSize() - 1; i>=0; i--){
+					int temp = latestrun.getAtIndex(i);
+					latestrun.remove(latestrun.getSize() - 1);
+					latestrun.add(latestrun.getSize(), temp);
+					
+					
+				}
+				latestrun.add(0, Score - time);
+
+				
+			}else{
+				int temp = latestrun.getAtIndex(1);
+				latestrun.remove(2);
+				latestrun.add(2, temp);
+				temp = latestrun.getAtIndex(0);
+				latestrun.remove(1);
+				latestrun.add(1, temp);
+				latestrun.remove(0);
+				latestrun.add(0, Score - time);
+			}
+
 			
 
 			
