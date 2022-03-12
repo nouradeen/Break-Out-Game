@@ -8,8 +8,10 @@ public class Window extends JFrame {
     private JList LatestRunList;
     private JFrame LatestRunWindow;
 
+    private JList NumbersLatest;
+    private String[] numbers = {"1. ", "2. ", "3. "};
+
     public Window(HighScore highscore, LatestRun latestrun){
-        //HighScore Window
         HighScoreWindow = new JFrame();
         HighScoreList = new JList(highscore.getDlm());
         HighScoreList.setFont(new Font("TimesRoman", 1, 40));
@@ -18,23 +20,28 @@ public class Window extends JFrame {
         HighScoreList.setFocusable(false);
         HighScoreWindow.setLayout(new BorderLayout());        
         HighScoreWindow.add(HighScoreList);
-        HighScoreWindow.setSize(350,640);
-        HighScoreWindow.setLocation(1430,0);
+        HighScoreWindow.setSize(200,640);
+        HighScoreWindow.setLocation(1290,0);
         HighScoreWindow.setFocusable(false);
         HighScoreWindow.setDefaultCloseOperation(EXIT_ON_CLOSE);
         HighScoreWindow.setVisible(true);
         HighScoreWindow.setTitle("HighScore");
 
-        //LatestRun Window
         LatestRunWindow = new JFrame();
-        LatestRunList = new JList(latestrun.getDlm());
+        LatestRunList = new JList<Integer>(latestrun.getDlm());
+        NumbersLatest = new JList<String>(numbers);
         LatestRunList.setFont(new Font("TimesRoman", 1, 40));
+        NumbersLatest.setFont(new Font("TimesRoman", 1, 40));
         LatestRunList.setForeground(Color.YELLOW);
         LatestRunList.setBackground(Color.BLACK);
+        NumbersLatest.setForeground(Color.YELLOW);
+        NumbersLatest.setBackground(Color.BLACK);
         LatestRunList.setFocusable(false);
-        LatestRunWindow.setLayout(new BorderLayout());
+        NumbersLatest.setFocusable(false);
+        LatestRunWindow.setLayout(new GridLayout(1,2));
+        LatestRunWindow.add(NumbersLatest);
         LatestRunWindow.add(LatestRunList);
-        LatestRunWindow.setSize(350,640);
+        LatestRunWindow.setSize(200,640);
         LatestRunWindow.setLocation(1100,0);
         LatestRunWindow.setFocusable(false);
         LatestRunWindow.setDefaultCloseOperation(EXIT_ON_CLOSE);

@@ -109,13 +109,12 @@ public class Game {
 				highscore.sort();
 				highscore.remove(10);
 			}
+
 			if(latestrun.getSize() < 3){
 				for(int i = latestrun.getSize() - 1; i>=0; i--){
 					int temp = latestrun.getAtIndex(i);
 					latestrun.remove(latestrun.getSize() - 1);
-					latestrun.add(latestrun.getSize(), temp);
-					
-					
+					latestrun.add(latestrun.getSize(), temp);	
 				}
 				latestrun.add(0, Score - time);
 
