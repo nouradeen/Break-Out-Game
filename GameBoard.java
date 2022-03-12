@@ -1,12 +1,10 @@
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
 import javax.swing.JComponent;
 
 public class GameBoard extends JComponent {
 	private final int FPS = 140; 
 	private Game game;
-	private GameState gamestate;
 	private Keyboard keyboard;
 	public GameBoard() {
 		keyboard = new Keyboard();
@@ -42,7 +40,7 @@ public class GameBoard extends JComponent {
 	}
 
 	public void start() {
-		while(true) { // Change back? change to "true" and remove GameState.java and remove the PAUSE from Game.java //game.getState() != GameState.PASUE
+		while(true) { 
 			game.update(keyboard);
 			try {
 				Thread.sleep(1000 / FPS); //Throttle thread
@@ -51,15 +49,6 @@ public class GameBoard extends JComponent {
 			}
 			this.repaint();
 		}
-		
-		//Change back? Remove this section
-		// if(game.getState() == GameState.PASUE){
-		// 	try {
-		// 		Thread.sleep(60000);
-		// 	} catch (InterruptedException e) {
-		// 		e.printStackTrace();
-		// 	}
-		// }
 		
 	}
 }
