@@ -7,7 +7,7 @@ public class Reset {
 
     public void CreateNewGame(ArrayList <Bricks> list){
         // bricks = new ArrayList<Bricks>();
-        for(int i = 20; i <= 200; i+=50){
+        for(int i = 80; i <= 260; i+=50){
 			for(int j = 10; j <= 800; j+=80){
 				Color randomColor = colors[random.nextInt(2)];
 				list.add(new Bricks(j, i, 60, 30, randomColor));

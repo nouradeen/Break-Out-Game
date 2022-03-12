@@ -2,7 +2,6 @@
 import java.awt.*;
 import java.util.*;
 
-import javax.imageio.plugins.tiff.GeoTIFFTagSet;
 import javax.swing.JOptionPane;
 
 public class Game {
@@ -10,7 +9,6 @@ public class Game {
 	private static final int HEIGHT_Y = 600;
 	private int Score = 0;
 	private int Lives = 1;
-	private GameState state;
 	private int time;
 	private int counter = 0;
 
@@ -46,9 +44,6 @@ public class Game {
 		window = new Window(highscore, latestrun);
 	}
 
-	public GameState getState(){
-		return state;
-	}
 
 
 	public void update(Keyboard keyboard) {
@@ -129,12 +124,6 @@ public class Game {
 				latestrun.remove(0);
 				latestrun.add(0, Score - time);
 			}
-
-			
-
-			
-
-			//highscore.printList();
 		}
 		if(keyboard.isKeyDown(Key.Space) && GameOver == true){
 			GameOver = false;
