@@ -34,6 +34,11 @@ public class Keyboard {
 			case KeyEvent.VK_ESCAPE: state.put(Key.Escape, st); break;
 			case KeyEvent.VK_ENTER:  state.put(Key.Enter,  st); break;
 			case KeyEvent.VK_SPACE:  state.put(Key.Space,  st); break;
+			case KeyEvent.VK_B:		 state.put(Key.B,      st); break;
+			case KeyEvent.VK_L:		 state.put(Key.L,      st); break;
+			case KeyEvent.VK_S:		 state.put(Key.S,      st); break;
+			case KeyEvent.VK_V:		 state.put(Key.V,      st); break;
+			case KeyEvent.VK_C:		 state.put(Key.C,      st); break;
 		}
 	}
 	

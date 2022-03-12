@@ -11,8 +11,8 @@ public class Ball extends Sprite {
     
     public Ball(int x, int y, int width, int height, Color color){
         super(x, y, width, height, color);
-        xSpeed = 2;
-        ySpeed = -2;
+        xSpeed = 4;
+        ySpeed = -4;
     }
     @Override
     public void update(Keyboard keyboard) {

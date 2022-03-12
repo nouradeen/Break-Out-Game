@@ -8,7 +8,7 @@ public class Game {
 	private static final int WIDTH_X = 800;
 	private static final int HEIGHT_Y = 600;
 	private int Score = 0;
-	private int Lives = 1;
+	private int Lives = 50;
 	private int time;
 	private int counter = 0;
 
@@ -30,6 +30,9 @@ public class Game {
 
 	private HighScore highscore;
 	private LatestRun latestrun;
+
+	private int hack = 0;
+	private boolean cheat = false;
 
 	public Game(GameBoard board) {
 		highscore = new HighScore();
@@ -124,18 +127,76 @@ public class Game {
 				latestrun.remove(0);
 				latestrun.add(0, Score - time);
 			}
+
 		}
 		if(keyboard.isKeyDown(Key.Space) && GameOver == true){
 			GameOver = false;
 			counter = 0;
-			Lives = 1;
+			Lives = 3;
 			Score = 0;
 			reset.reset(bricks);
 			reset.CreateNewGame(bricks);
 			startTime = System.currentTimeMillis();
+			hack = 0;
+			ball.setXSpeed(4);
+			ball.setYSpeed(-4);
+			
 		}
 		
+		//Cheat Menu----------------------------------------------------
+		if(keyboard.isKeyDown(Key.B)){
+			hack+=50;
+			if(hack >= 10000){
+				bat.setWidth(WIDTH_X);
+				hack = 0;
+			}
+		}
+		if(keyboard.isKeyDown(Key.L)){
+			hack += 50;
+			if(hack >= 10000){
+				Lives = 100;
+				hack = 0;
+			}
+			
+		}
+		if(keyboard.isKeyDown(Key.S)){
+			hack+=50;
+			if(hack >= 10000){
+				Score = 100000;
+				hack = 0;
+			}
+		}
+		if(keyboard.isKeyDown(Key.V)){
+			hack+=50;
+			if(hack > 10000){
+				if(ball.getXSpeed() > 0)
+					ball.setXSpeed(ball.getXSpeed() + 10);
+				else
+					ball.setXSpeed(ball.getXSpeed() - 10);
+				if(ball.getYSpeed() > 0)
+					ball.setYSpeed(ball.getXSpeed() + 10);
+				else
+					ball.setYSpeed(ball.getYSpeed() - 10);	
+				hack = 0;			
+			}
+			
+		}
+		if(keyboard.isKeyDown(Key.C) && cheat == false){
+			hack+=50;
+			if(hack >= 10000){
+				cheat = true;
+				hack = 0;
+			}
+		}else if(keyboard.isKeyDown(Key.C) && cheat == true){
+			hack+=50;
+			if(hack >= 10000){
+				cheat = false;
+				hack = 0;
+			}
+		}
+		//Cheat Menu---------------------------------------------------
 	}
+
 
 	public String popup(){
 		String name = JOptionPane.showInputDialog("Please write your name (MAX 3 characters): ");
@@ -160,10 +221,12 @@ public class Game {
 		}else if(Lives <= 0 && !bricks.isEmpty()){
 			graphics.setColor(Color.red);
 			drawString(graphics, "Ink Free", "GAME OVER!", 180, 350, 80);
+			drawString(graphics, "Times Roman", "Press SPACE to restart", 170, 420, 40);
 			GameOver = true;
 		}else if(Lives > 0 && bricks.isEmpty()){
 			graphics.setColor(Color.red);
-			drawString(graphics, "Ink Free", "You WON! Score: " + String.valueOf(Score), 200, 300, 80);
+			drawString(graphics, "Ink Free", "You WON! Score: " + String.valueOf(Score - time), 100, 300, 80);
+			drawString(graphics, "Times Roman", "Press SPACE to restart", 170, 420, 40);
 			GameOver = true;
 		}
 
@@ -176,8 +239,19 @@ public class Game {
 		brickGreen_tutorial.draw(graphics);
 		drawString(graphics, "Ink Free", "100 Points", 890, 88, 38);
 		graphics.setColor(Color.blue);
-		drawString(graphics, "Ink Free", "Score: " + String.valueOf(Score), 820, 140, 38);
-		drawString(graphics, "Ink Free", "Lives: " + String.valueOf(Lives), 820, 190, 38);		
+		drawString(graphics, "Ink Free", "Score: " + String.valueOf(Score - time), 820, 140, 38);
+		drawString(graphics, "Ink Free", "Lives: " + String.valueOf(Lives), 820, 190, 38);
+		//Cheat Menu-----------------------------
+		if(cheat == true){
+			graphics.setColor(Color.ORANGE);
+			drawString(graphics, "Ink Free", "Hold B to make the bord wide", 815, 300, 20);
+			drawString(graphics, "Ink Free", "Hold L to get 100 Lives", 815, 325, 20);
+			drawString(graphics, "Ink Free", "Hold S to get 100,000 points", 815, 350, 20);
+			drawString(graphics, "Ink Free", "Hold V to increase ball speed", 815, 375, 20);
+		}else if(cheat == false){
+			graphics.setColor(Color.BLACK);
+		}
+		//Cheat Menu-----------------------------
 	}
 
 	private void drawString(Graphics g, String _font, String text, int x, int y, int size){
