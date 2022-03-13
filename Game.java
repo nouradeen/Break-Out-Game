@@ -100,9 +100,9 @@ public class Game {
 				}
 			}while(name.length() > 3);
 
-			if(name == ""){
-				highscore.add(new ScoreContainer(name, Score - time));
-			}
+			
+			highscore.add(new ScoreContainer(name, Score - time));
+			
 			
 			if(highscore.size() > 2){
 				highscore.sort();
