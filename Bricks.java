@@ -7,9 +7,6 @@ public class Bricks extends Sprite {
     public Bricks(int x, int y, int width, int height, Color color) {
         super(x, y, width, height, color);
     }
-    public Bricks(int x, int y, int width, int height) {
-        super(x, y, width, height, Color.white);
-    }
 
     @Override
     public void update(Keyboard keyboard) {

@@ -21,8 +21,10 @@ public class ScoreContainer implements Comparable<ScoreContainer> {
 
     @Override
     public String toString() {
-        return getName() + "    " + getScore();
+        return getName() + "  " + getScore();
     }
 
 
 }
+
+

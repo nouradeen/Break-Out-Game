@@ -8,7 +8,7 @@ public class Game {
 	private static final int WIDTH_X = 800;
 	private static final int HEIGHT_Y = 600;
 	private int Score = 0;
-	private int Lives = 50;
+	private int Lives = 3;
 	private int time;
 	private int counter = 0;
 
@@ -95,10 +95,15 @@ public class Game {
 			
 			do{
 				name = popup();
+				if(name == null){
+					break;
+				}
 			}while(name.length() > 3);
 
+			if(name == ""){
+				highscore.add(new ScoreContainer(name, Score - time));
+			}
 			
-			highscore.add(new ScoreContainer(name, Score - time));
 			if(highscore.size() > 2){
 				highscore.sort();
 			}
