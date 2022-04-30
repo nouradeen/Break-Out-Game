@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,52 +11,30 @@ public class HighScore {
     }
 
     public void add(ScoreContainer score){
-        dlm.add(dlm.size(), score);
+        dlm.add(dlm.getSize(), score);//dlm.getSize() är den alltid sista platsen i listan
     }
 
     public void sort(){
-        List<ScoreContainer> list = new ArrayList<>();
-        for(int i = 0; i < dlm.size(); i++){
+        List<ScoreContainer> list = new ArrayList<>();// ArrayList skapas
+        for(int i = 0; i < dlm.getSize(); i++){// Alla element från dlm listan läggs i list
             list.add((ScoreContainer)dlm.get(i));
         }
-        Collections.sort(list, Collections.reverseOrder());
-        dlm.removeAllElements();
-        for(ScoreContainer o: list){
+        Collections.sort(list, Collections.reverseOrder());//list sorteras
+        dlm.removeAllElements();//Alla element från dlm tas bort
+        for(ScoreContainer o: list){//Nya sorterade element från list läggs tillbaks till dlm
             dlm.addElement(o);
-            //System.out.println(o.getName() + " " + o.getScore());
         }
     }
     public void remove(int index){
         dlm.removeElementAt(index);
     }
-    public int size(){
-        return dlm.size();
+
+    public int getSize(){
+        return dlm.getSize();
     }
 
     public DefaultListModel getDlm(){
         return dlm;
     }
-    
-
-
-
-    //Testing method, remove when finish
-    public void printList(){
-        System.out.println("Begin of PrinList(): \n-----------------------------------");
-        for(int i = 0; i < dlm.size(); i++){
-            System.out.println(dlm.get(i).getName() + " " + dlm.get(i).getScore());
-        }
-        System.out.println("-----------------------------------");
-    }
-
-    
-
 
 }
-
-
-/*
-1- Contructor
-2- Sort
-3- Add 
-*/

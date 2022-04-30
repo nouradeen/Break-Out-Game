@@ -1,5 +1,4 @@
 import java.awt.event.KeyEvent;
-
 import javax.swing.*;
 
 public class Program extends JFrame {
@@ -21,7 +20,7 @@ public class Program extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		try{UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}
+		try{UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());}//Allting följer systemets theme
 		catch (Exception e){ }
 		Program program = new Program();
 	}

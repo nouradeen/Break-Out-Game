@@ -3,7 +3,7 @@ import java.awt.event.*;
 import javax.swing.JComponent;
 
 public class GameBoard extends JComponent {
-	private final int FPS = 140; 
+	private final int FPS = 140; // Ändrade FPS till 140 istället för 40
 	private Game game;
 	private Keyboard keyboard;
 	public GameBoard() {
@@ -13,7 +13,7 @@ public class GameBoard extends JComponent {
 	
 	@Override
 	public Dimension getPreferredSize() {
-		return new Dimension(1100, 600);
+		return new Dimension(1100, 600);// Ändrade storleken till 1100, 600 istället för 800, 600
 	}
 
 	@Override

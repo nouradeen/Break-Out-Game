@@ -16,9 +16,8 @@ public class ScoreContainer implements Comparable<ScoreContainer> {
 
     @Override
     public int compareTo(ScoreContainer o) {
-        return (this.getScore().compareTo(o.getScore()));
+        return (this.getScore().compareTo(o.getScore())); //Jämför this.score med o.getScore(), behövs för att Collections.sort() ska fungera.
     }
-
     @Override
     public String toString() {
         return getName() + "  " + getScore();

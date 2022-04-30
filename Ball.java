@@ -11,6 +11,7 @@ public class Ball extends Sprite {
     
     public Ball(int x, int y, int width, int height, Color color){
         super(x, y, width, height, color);
+        //Boll Hastighet
         xSpeed = 4;
         ySpeed = -4;
     }
@@ -32,6 +33,11 @@ public class Ball extends Sprite {
     }
 
     public void EdgeChecker(){
+        /*
+        Om x positionen för bollen är lika med eller större än (bredden på fönstret) - (boll bredden) så att bollen inte "åker ut sen förlorar man"
+        checken är mellan bollen och väggen till höger. || om x positionen för bollen är lika eller mindre 0 så att bollen inte åker ut när den träffar
+        vänster väggen
+        */
         if(getX() >= WIDTH - getWidth() || getX() <= 0){
             xSpeed = -xSpeed;
         }

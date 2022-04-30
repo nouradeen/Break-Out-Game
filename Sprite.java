@@ -13,7 +13,7 @@ public abstract class Sprite {
 	public void setWidth(int width) { this.width = width; };
 	public void setColor(Color color) {this.color = color; };
 	public void setHeight(int height) { this.height = height; };
-	public Sprite(int x, int y, int width, int height, Color color) {
+	public Sprite(int x, int y, int width, int height, Color color) { //Lagt till color parametern
 		this.x = x;
 		this.y = y;
 		this.width = width;
